@@ -1,24 +1,45 @@
-const CATEGORIES_URL = "https://japdevdep.github.io/ecommerce-api/category/all.json";
-const PUBLISH_PRODUCT_URL = "https://japdevdep.github.io/ecommerce-api/product/publish.json";
-const CATEGORY_INFO_URL = "https://japdevdep.github.io/ecommerce-api/category/1234.json";
-const PRODUCTS_URL = "https://japdevdep.github.io/ecommerce-api/product/all.json";
-const PRODUCT_INFO_URL = "https://japdevdep.github.io/ecommerce-api/product/5678.json";
-const PRODUCT_INFO_COMMENTS_URL = "https://japdevdep.github.io/ecommerce-api/product/5678-comments.json";
-const CART_INFO_URL = "https://japdevdep.github.io/ecommerce-api/cart/987.json";
-const CART_BUY_URL = "https://japdevdep.github.io/ecommerce-api/cart/buy.json";
+var category = {};
 
-funtion (DOMContentLoaded, Product_info_url)
+function showImagesGallery(array){
 
+    let htmlContentToAppend = "";
 
+    for(let i = 0; i < array.length; i++){
+        let imageSrc = array[i];
 
+        htmlContentToAppend += `
+        <div class="col-lg-3 col-md-4 col-6">
+            <div class="d-block mb-4 h-100">
+                <img class="img-fluid img-thumbnail" src="` + imageSrc + `" alt="">
+            </div>
+        </div>
+        `
 
-
-
+        document.getElementById("productImagesGallery").innerHTML = htmlContentToAppend;
+    }
+}
 
 //Función que se ejecuta una vez que se haya lanzado el evento de
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
 document.addEventListener("DOMContentLoaded", function(e){
+    getJSONData(CATEGORY_INFO_URL).then(function(resultObj){
+        if (resultObj.status === "ok")
+        {
+            category = resultObj.data;
 
-    
+            let categoryNameHTML  = document.getElementById("categoryName");
+            let categoryDescriptionHTML = document.getElementById("categoryDescription");
+            let productCountHTML = document.getElementById("productCount");
+            let productCriteriaHTML = document.getElementById("productCriteria");
+        
+            categoryNameHTML.innerHTML = category.name;
+            categoryDescriptionHTML.innerHTML = category.description;
+            productCountHTML.innerHTML = category.productCount;
+            productCriteriaHTML.innerHTML = category.productCriteria;
+
+            //Muestro las imagenes en forma de galería
+            showImagesGallery(category.images);
+        }
+    });
 });
