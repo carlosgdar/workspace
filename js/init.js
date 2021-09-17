@@ -39,9 +39,16 @@ var getJSONData = function(url){
         return result;
     });
 }
-
+function llamarUsuario() {
+ // let myStorage = window.localStorage;
+  let nombreUsuario = localStorage.getItem('usuario');
+  let usuarioIngresado = document.getElementById("nombre-usuario");
+  usuarioIngresado.innerHTML += `${nombreUsuario}`
+}
 //Función que se ejecuta una vez que se haya lanzado el evento de
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
 document.addEventListener("DOMContentLoaded", function(e){
-});
+  llamarUsuario();
+
+})
